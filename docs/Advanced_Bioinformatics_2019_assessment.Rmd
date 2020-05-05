@@ -1,0 +1,114 @@
+---
+title: "Advanced Bioinformatics 2019 assessment"
+author: "P1706898 9508"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+
+Task 1
+```{r}
+sum(5:55)
+```
+
+
+Task 2
+```{r}
+# The function sumfun calculates the sum of all integers between 5 and n
+sumfun <- function(n) sum(5:n)
+sumfun(10)
+sumfun(20)
+sumfun(100)
+```
+
+
+Task 3
+```{r}
+# The function fib(n) will print the first n elements of the Fibonacci sequence
+fib <- function(n) {
+  x = 0
+  y = 1
+  v <- c()
+  if (n < 1) {
+    sprintf("There is no Fibonacci sequence with %i elements.  Please enter a positive integer.", n)
+    } else {
+    if (n == 1) {
+      v[[1]] <- 1
+      } else {
+        v[[1]] <- 1
+        for (i in 2:n) {
+          z = x + y
+          v[[i]] <- z
+          x = y
+          y = z
+        }
+      }
+      print(v)
+    }
+}
+fib(12)
+```
+
+
+Task 4
+```{r}
+library(ggplot2)
+#ggplot(data=mtcars, aes(x=as.factor(mpg), fill = factor(gear))) + geom_bar()
+
+ggplot(mtcars) +
+    geom_histogram(aes(x = mpg, fill = factor(gear)), bins = 25)
+```
+
+
+Task 5
+```{r}
+str(cars)
+y <- cars$speed; x <- cars$dist;
+model <- lm(formula="y~x")
+model
+summary(model)
+```
+the fitted slope x = 0.16557 with standard error 0.87438
+the intercept b = 8.28391 with standard error 0.01749
+
+
+Task 6
+```{r}
+ggplot(cars,aes(speed, dist)) + geom_point() + 
+  geom_smooth(method='lm', formula=y~x)
+```
+
+
+Task 7a
+Total distance tD = reaction distance (rD) + breaking distance (bD)
+If bD is proportional to speed (sp) squared we can say bD = beta(sp^2)
+So tD = rD + beta(sp^2)
+So a regression of tD (y) ~ sp^2 (x)
+
+```{r}
+y <- cars$dist; x <- cars$speed*cars$speed;
+model_2 <- lm(formula="y~x")
+model_2
+summary(model_2)
+```
+The intercept 8.86005 gives an estimate of the reaction distance.
+Assuming that distance is given in metres and speed is given in metres per second, 
+  reaction time (rT)  = rD / sp seconds
+                      = 8.86005 / sp
+
+Task 7b
+```{r}
+ggplot(cars,aes(speed^2, dist)) + geom_point() +
+geom_smooth(method='lm', formula= y~x)
+```
+
+The data looks good and there is a clear linear relationship between the square of the speed and the dist
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
